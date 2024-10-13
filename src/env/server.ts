@@ -16,6 +16,15 @@ export const env = createEnv({
       message:
         "Invalid URL path format. It should start with a forward slash ('/') and contain only alphanumeric characters, dashes, underscores, or additional forward slashes.",
     }),
+    DATABASE_URL: z
+      .string()
+      .regex(
+        /^postgresql:\/\/[a-zA-Z0-9_]+:[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*@[a-zA-Z0-9\-.]+\/[a-zA-Z0-9_]+$/,
+        {
+          message:
+            "Invalid PostgreSQL connection string format. It should be in the format: 'postgresql://<username>:<password>@<host>/<database>'.",
+        }
+      ),
   },
   onValidationError: (error: ZodError) => {
     console.error(
